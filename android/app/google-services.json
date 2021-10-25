@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "635041237967",
+    "project_id": "payroll-9642e",
+    "storage_bucket": "payroll-9642e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635041237967:android:c20054eecd8821297b60ba",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635041237967-51d4m02beu8f06gbjjt13o7ugou41loi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test",
+            "certificate_hash": "d100059d72572082b910d8f13cb7b494f7933884"
+          }
+        },
+        {
+          "client_id": "635041237967-9rq2ne6pt57css5c3ftjo28tn8o7o63j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCJ-0BZi-dAK8fhtc_Q8j7JMOhULaz8lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635041237967-9rq2ne6pt57css5c3ftjo28tn8o7o63j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
