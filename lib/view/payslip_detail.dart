@@ -177,7 +177,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('${snapshot.data!.id.toString()}'),
+                          title: Text(snapshot.data!.id.toString()),
                           subtitle: Text('snapshot.data![index].email'),
                           onTap: () {
 
@@ -191,7 +191,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('snapshot.data![index].name'),
+                          title: Text(snapshot.data!.employee!.fullname.toString()),
                           subtitle: Text('snapshot.data![index].email'),
                           onTap: () {
 

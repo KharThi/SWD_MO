@@ -15,7 +15,7 @@ class PaySlipDetails {
   late int bonus;
   late int tax;
   late int netPay;
-  late Employee employee;
+  Employee? employee;
   //late PaySlip paySlip;
 
   PaySlipDetails(
@@ -49,9 +49,12 @@ class PaySlipDetails {
     bonus = json['bonus'];
     tax = json['tax'];
     netPay = json['netPay'];
-    employee = (json['employee'] != null
+/*    employee = (json['employee'] != null
         ? new Employee.fromJson(json['employee'])
-        : null)!;
+        : null)!;*/
+    if (json['employee'] != null) {
+      employee=Employee.fromJson(json['employee']);
+    }
     /*paySlip =
     json['paySlip'] != null ? new PaySlip.fromJson(json['paySlip']) : null;*/
   }
@@ -72,7 +75,7 @@ class PaySlipDetails {
     data['tax'] = this.tax;
     data['netPay'] = this.netPay;
     if (this.employee != null) {
-      data['employee'] = this.employee.toJson();
+      data['employee'] = this.employee!.toJson();
     }
     /*if (this.paySlip != null) {
       data['paySlip'] = this.paySlip.toJson();
