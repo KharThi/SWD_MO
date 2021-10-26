@@ -39,10 +39,10 @@ class _PaySlipPageState extends State<PaySlipPage> {
                     color: Colors.white,
                     elevation: 2.0,
                     child: ListTile(
-                      title: Text(snapshot.data![index].id.toString()),
-                      subtitle: Text(snapshot.data![index].payDate),
+                      title: Text('Your Payslip In '+snapshot.data![index].payDate),
+                      subtitle: Text('Total: '+snapshot.data![index].totalPayrollCost.toString()),
                       onTap: () {
-
+                          _navigationToPaySlipDetail(snapshot.data[index].paySlipDetailId);
                       },
                       trailing: Icon(Icons.arrow_forward_ios),
                     ),
@@ -54,89 +54,10 @@ class _PaySlipPageState extends State<PaySlipPage> {
         )
     );
   }
-  void _navigationToPaySlipDetail(PaySlipDetails paySlipDetails) {
+  void _navigationToPaySlipDetail(int id) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return PaySlipDetail(id: 3);
+      return PaySlipDetail(id: id);
     }));
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Column(
-            children: <Widget>[
-              Expanded(child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) =>
-                     Container(
-                       color: _selectedIndex != null && _selectedIndex == index
-                           ? Colors.blueGrey
-                           : Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20 * 0.75),
-                        child:
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 10, 5, 0),
-                                  child: GestureDetector(
-                                    onTap: () => {
-                                      _onSelected(index),
-                                      Navigator.push(context, new MaterialPageRoute(
-                                          builder: (context) => UserInformation()))
-                                    },
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Icon(Icons.email),
-                                        Text("From...", style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w500
-                                        ),
-                                        ),
-                                        SizedBox(height: 8),
-
-                                        Opacity(
-                                          opacity: 0.64,
-                                          child: Text(
-                                            "Your payslip details in ... month",
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                            )
-                          ],
-                        ),
-                      ),
-                       ),
-                     )
-                    ),
-            ]
-        )*/

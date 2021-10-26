@@ -14,10 +14,10 @@ class PaySlip {
   late int totaltax;
   late int employeeId;
 /*  late Employee employee;*/
-  late int paySlipDetailID;
+  late int paySlipDetailId;
 /*  late PayStatus payStatus;*/
   late List<FeedBacks> feedBacks;
-  late PaySlipDetails paySlipDetails;
+  PaySlipDetails? paySlipDetails;
 
   PaySlip(
       { required this.id,
@@ -30,7 +30,7 @@ class PaySlip {
         required this.totaltax,
         required this.employeeId,
 /*        required this.employee,*/
-        required this.paySlipDetailID,
+        required this.paySlipDetailId,
         //this.payStatus,
         required this.feedBacks,
         required this.paySlipDetails
@@ -47,7 +47,7 @@ class PaySlip {
     totalNetPayroll = json['totalNetPayroll'];
     totaltax = json['totaltax'];
     employeeId = json['employeeId'];
-    paySlipDetailID = json['paySlipDetailID'];
+    paySlipDetailId = json['paySlipDetailId'];
 /*    employee = Employee.fromJson(json['employee']);*/
     /*payStatus = json['payStatus'] != null
         ? new PayStatus.fromJson(json['payStatus'])
@@ -74,7 +74,7 @@ class PaySlip {
     data['totalNetPayroll'] = this.totalNetPayroll;
     data['totaltax'] = this.totaltax;
     data['employeeId'] = this.employeeId;
-    data['paySlipDetailID'] = this.paySlipDetailID;
+    data['paySlipDetailId'] = this.paySlipDetailId;
 /*    if (this.employee != null) {
       data['employee'] = this.employee;
     }*/

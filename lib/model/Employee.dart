@@ -5,25 +5,25 @@ import 'Company.dart';
 
 class Employee {
 
- late int id;
- late int companyId;
- late int departmentId;
- late String fullname;
- late bool gender;
- late String firstDayAtWork;
- late String workEmailAddress;
- late String personalEmailAddress;
- late int salary;
- late bool salaryType;
- late int citizenIdentification;
- late String address;
- late int phoneNumber;
- late int taxCode;
- late int bankNumber;
- late bool paymentType;
- late Company company;
- late Department department;
- late List<PaySlipDetails> paySlipDetails;
+  late int id;
+  late int companyId;
+  late int departmentId;
+  late String fullname;
+  late bool gender;
+  late String firstDayAtWork;
+  late String workEmailAddress;
+/* late String personalEmailAddress;*/
+  late int salaryId;
+/* late bool salaryType;*/
+  late int citizenIdentification;
+  late String address;
+  late int phoneNumber;
+  late int taxCode;
+  late int bankNumber;
+  late bool paymentType;
+  late Company company;
+  late Department department;
+/* late List<PaySlipDetails> paySlipDetails;*/
 
 
 
@@ -35,9 +35,9 @@ class Employee {
         required this.gender,
         required this.firstDayAtWork,
         required this.workEmailAddress,
-        required this.personalEmailAddress,
-        required this.salary,
-        required this.salaryType,
+/*        required this.personalEmailAddress,*/
+        required this.salaryId,
+/*        required this.salaryType,*/
         required this.citizenIdentification,
         required this.address,
         required this.phoneNumber,
@@ -46,34 +46,41 @@ class Employee {
         required this.paymentType,
         required this.company,
         required this.department,
-        required this.paySlipDetails});
+        /*  required this.paySlipDetails*/
+      });
 
- Employee.fromJson(Map<String, dynamic> json) {
-   id = json['id'];
-   companyId = json['companyId'];
-   departmentId = json['departmentId'];
-   fullname = json['fullname'];
-   gender = json['gender'];
-   firstDayAtWork = json['firstDayAtWork'];
-   workEmailAddress = json['workEmailAddress'];
-   personalEmailAddress = json['personalEmailAddress'];
-   salary = json['salary'];
-   salaryType = json['salaryType'];
-   citizenIdentification = json['citizenIdentification'];
-   address = json['address'];
-   phoneNumber = json['phoneNumber'];
-   taxCode = json['taxCode'];
-   bankNumber = json['bankNumber'];
-   paymentType = json['paymentType'];
-   company = Company.fromJson(json['company']);
-   department = Department.fromJson(json['department']);
-  /* if (json['paySlipDetails'] != null) {
+  Employee.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    companyId = json['companyId'];
+    departmentId = json['departmentId'];
+    fullname = json['fullname'];
+    gender = json['gender'];
+    firstDayAtWork = json['firstDayAtWork'];
+    workEmailAddress = json['workEmailAddress'];
+/*   personalEmailAddress = json['personalEmailAddress'];*/
+    salaryId = json['salaryId'];
+/*   salaryType = json['salaryType'];*/
+    citizenIdentification = json['citizenIdentification'];
+    address = json['address'];
+    phoneNumber = json['phoneNumber'];
+    taxCode = json['taxCode'];
+    bankNumber = json['bankNumber'];
+    paymentType = json['paymentType'];
+    if (json['company'] != null) {
+      company=Company.fromJson(json['company']);
+    }
+/*   company = Company.fromJson(json['company']);*/
+    if (json['department'] != null) {
+      department=Department.fromJson(json['department']);
+    }
+/*   department = Department.fromJson(json['department']);*/
+    /* if (json['paySlipDetails'] != null) {
      paySlipDetails = <PaySlipDetails>[];
      json['paySlipDetails'].forEach((v) {
        paySlipDetails.add(new PaySlipDetails());
      }*/
 
-   }
+  }
 
 
   Map<String, dynamic> toJson() {
@@ -85,9 +92,9 @@ class Employee {
     data['gender'] = this.gender;
     data['firstDayAtWork'] = this.firstDayAtWork;
     data['workEmailAddress'] = this.workEmailAddress;
-    data['personalEmailAddress'] = this.personalEmailAddress;
-    data['salary'] = this.salary;
-    data['salaryType'] = this.salaryType;
+/*    data['personalEmailAddress'] = this.personalEmailAddress;*/
+    data['salaryId'] = this.salaryId;
+/*    data['salaryType'] = this.salaryType;*/
     data['citizenIdentification'] = this.citizenIdentification;
     data['address'] = this.address;
     data['phoneNumber'] = this.phoneNumber;

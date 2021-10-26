@@ -52,83 +52,43 @@ class _HomePageState extends State<HomePage> {
       container = PrivacyPolicy();
       appbarTitle = 'PRIVACY POLICY';
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appbarTitle,
-            style: TextStyle(fontSize: 20, fontFamily: "Times New Roman")),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.black, Colors.grey],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (context)=> GoogleSignInProvider())
+        ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(appbarTitle,
+              style: TextStyle(fontSize: 20, fontFamily: "Times New Roman")),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.black, Colors.grey],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
+              ),
             ),
           ),
         ),
-      ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                MyHeaderDrawer(),
-                MyDrawerList(),
-              ],
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [
+                  MyHeaderDrawer(),
+                  MyDrawerList(),
+                ],
+              ),
             ),
           ),
         ),
-      ),
 
-      bottomNavigationBar: Row(
-        children: <Widget>[
-          new GestureDetector(
-            onTap: () {
-
-            },
-            child: Container(
-              height: 45,
-              width: MediaQuery
-                  .of(mainContext)
-                  .size
-                  .width / 3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.black26, Colors.black12],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                ),
-              ),
-              child: Icon(Icons.history_outlined),
-
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context, new MaterialPageRoute(
-                //cho nay nen back lai chu kh tao widget homepage moi
-                  builder: (mainContext) => HomePage()));
-            },
-            child: Container(
-              height: 45,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.grey, Colors.black12],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
-                ),
-              ),
-              child: Icon(Icons.home_outlined),
-            ),
-          ),
-          new GestureDetector(
+        bottomNavigationBar: Row(
+          children: <Widget>[
+            new GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                  return PaySlipDetail(id: 3);
-                }));
+
               },
               child: Container(
                 height: 45,
@@ -138,18 +98,62 @@ class _HomePageState extends State<HomePage> {
                     .width / 3,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.black, Colors.grey],
+                    colors: [Colors.black26, Colors.black12],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
                 ),
-                child: Icon(Icons.notifications_active_outlined),
+                child: Icon(Icons.history_outlined),
 
-              )
-          )
-        ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, new MaterialPageRoute(
+                  //cho nay nen back lai chu kh tao widget homepage moi
+                    builder: (mainContext) => HomePage()));
+              },
+              child: Container(
+                height: 45,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 3,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.grey, Colors.black12],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                  ),
+                ),
+                child: Icon(Icons.home_outlined),
+              ),
+            ),
+            new GestureDetector(
+                onTap: () {
+
+                },
+                child: Container(
+                  height: 45,
+                  width: MediaQuery
+                      .of(mainContext)
+                      .size
+                      .width / 3,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Colors.grey],
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                    ),
+                  ),
+                  child: Icon(Icons.notifications_active_outlined),
+
+                )
+            )
+          ],
+        ),
+        body: container,
       ),
-      body: container,
     );
   }
 
@@ -194,6 +198,7 @@ class _HomePageState extends State<HomePage> {
               final provider =
               Provider.of<GoogleSignInProvider>(context, listen: false);
               provider.logout();
+              _showAlertDialogLogout(context);
             }
           });
         },
@@ -225,7 +230,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showAlertDialogLogout() {
+  void _showAlertDialogLogout(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     showDialog(
         context: context,

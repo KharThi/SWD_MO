@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test/model/PaySlipDetails.dart';
 import 'package:test/resource/payroll_system_provider.dart';
 
+import 'feedback.dart';
 import 'home.dart';
 
 class PaySlipDetail extends StatefulWidget {
@@ -15,9 +16,7 @@ class PaySlipDetail extends StatefulWidget {
 }
 
 class _PaySlipDetailState extends State<PaySlipDetail> {
-  //PaySlipDetails paySlipDetails;
   int id;
-  //late final Size size;
 
   _PaySlipDetailState(this.id);
 
@@ -62,9 +61,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, new MaterialPageRoute(
-                  //cho nay nen back lai chu kh tao widget homepage moi
-                    builder: (mainContext) => HomePage()));
+                Navigator.pop(context);
               },
               child: Container(
                 height: 45,
@@ -84,9 +81,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
             ),
             new GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                    return PaySlipDetail(id: 3);
-                  }));
+                 Navigator.pop(context);
                 },
                 child: Container(
                   height: 45,
@@ -140,7 +135,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                'Hi Uishopy!',
+                                '    Hi '+snapshot.data!.employee!.fullname.toString(),
                                 style: Theme.of(context).textTheme.headline5!.copyWith(
                                     color: Colors.white, fontWeight: FontWeight.bold),
                               ),
@@ -167,6 +162,27 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                                 ),
                               ],
                             ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'TOTAL',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(210, 0, 0, 0),
+                                  child: Text(
+                                    "VND "+ snapshot.data!.grossPay.toString(),
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ),
                         ),
                       ],
@@ -177,8 +193,8 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('${snapshot.data!.id.toString()}'),
-                          subtitle: Text('snapshot.data![index].email'),
+                          title: Text('Working Hours'),
+                          subtitle: Text(snapshot.data!.workingHours.toString()),
                           onTap: () {
 
                           },
@@ -191,8 +207,8 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('snapshot.data![index].name'),
-                          subtitle: Text('snapshot.data![index].email'),
+                          title: Text('Overtime Working Hours'),
+                          subtitle: Text(snapshot.data!.overtimeWorkingHours.toString()),
                           onTap: () {
 
                           },
@@ -205,8 +221,8 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('snapshot.data![index].name'),
-                          subtitle: Text('snapshot.data![index].email'),
+                          title: Text('Doubletime Working Hours'),
+                          subtitle: Text(snapshot.data!.doubletimeWorkingHours.toString()),
                           onTap: () {
 
                           },
@@ -219,8 +235,92 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                         color: Colors.white,
                         elevation: 2.0,
                         child: ListTile(
-                          title: Text('snapshot.data![index].name'),
-                          subtitle: Text('snapshot.data![index].email'),
+                          title: Text('Hours Off'),
+                          subtitle: Text(snapshot.data!.hoursOff.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Gross Pay'),
+                          subtitle: Text(snapshot.data!.grossPay.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Benefit'),
+                          subtitle: Text(snapshot.data!.benefit.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Deduction'),
+                          subtitle: Text(snapshot.data!.deduction.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Bonus'),
+                          subtitle: Text(snapshot.data!.bonus.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Tax'),
+                          subtitle: Text(snapshot.data!.tax.toString()),
+                          onTap: () {
+
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 2.0,
+                        child: ListTile(
+                          title: Text('Net Pay'),
+                          subtitle: Text(snapshot.data!.netPay.toString()),
                           onTap: () {
 
                           },
@@ -232,10 +332,18 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
               );
 
             }else{
-              return Container();
+              return Center(child: CircularProgressIndicator(color: Colors.black26,));
             }
           },
-        )
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            Navigator.push(context, new MaterialPageRoute(
+                builder: (mainContext) => FeebackPage()));
+          },
+          child: Icon(Icons.feedback_outlined),
+          backgroundColor: Colors.grey,
+        ),
       );
   }
 }
