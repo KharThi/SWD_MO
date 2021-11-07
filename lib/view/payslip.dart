@@ -12,31 +12,34 @@ class PaySlipPage extends StatefulWidget {
   @override
   _PaySlipPageState createState() => _PaySlipPageState();
 }
+int paySlipID=0;
 
 class _PaySlipPageState extends State<PaySlipPage> {
-
+  var empID=2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow[50],
         body: Container(
           child: FutureBuilder(
-            future: PayrollProvider.fetchPaySlips(1),
+            future: PayrollProvider.fetchPaySlips(empID),
             builder: (BuildContext context, AsyncSnapshot snapshot){
               if(snapshot.hasError){
-                print('Lỗi này nè: '+snapshot.error.toString());
+                print('Lỗi này ở payslippage: '+snapshot.error.toString());
               }
               if (!snapshot.hasData) {
                 return Container(
                   child: Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: Colors.amberAccent,),
                   ),
                 );
               }
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {
+                  paySlipID = snapshot.data![index].id;
                   return Card(
-                    color: Colors.white,
+                    color: Colors.lime[100],
                     elevation: 2.0,
                     child: ListTile(
                       title: Text('Your Payslip In '+snapshot.data![index].payDate),

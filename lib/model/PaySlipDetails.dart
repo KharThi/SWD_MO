@@ -4,16 +4,16 @@ class PaySlipDetails {
   late int id;
   late int paySlipId;
   late int employeeId;
-  late int workingHours;
-  late int overtimeWorkingHours;
-  late int doubletimeWorkingHours;
-  late int hoursOff;
-  late int grossPay;
-  late double benefit;
-  late int deduction;
-  late int bonus;
-  late int tax;
-  late int netPay;
+  late var workingHours;
+  late var overtimeWorkingHours;
+  late var doubletimeWorkingHours;
+  late var hoursOff;
+  late var grossPay;
+  late var benefit;
+  late var deduction;
+  late var bonus;
+  late var tax;
+  late var netPay;
   Employee? employee;
   //late PaySlip paySlip;
 

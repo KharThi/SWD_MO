@@ -11,7 +11,7 @@ class PrivacyPolicy extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Card(
-          color: Colors.grey,
+          color: Colors.lime[200],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),

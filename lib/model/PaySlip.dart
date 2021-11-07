@@ -9,8 +9,8 @@ class PaySlip {
   late String payPeriodBeginDate;
   late String payPeriodEndDate;
   late int payStatusId;
-  late int totalPayrollCost;
-  late int totalNetPayroll;
+  late var totalPayrollCost;
+  late var totalNetPayroll;
   late int totaltax;
   late int employeeId;
 /*  late Employee employee;*/

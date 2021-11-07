@@ -35,28 +35,28 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                    //   child: Container(
+                    //       width: 70,
+                    //       height: 70,
+                    //       padding: EdgeInsets.all(15),
+                    //       decoration: BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         gradient: LinearGradient(
+                    //           colors: [Colors.lightGreen, Colors.white],
+                    //           begin: Alignment.bottomRight,
+                    //           end: Alignment.topLeft,
+                    //         ),
+                    //       ),
+                    //       child: Image.asset('assets/person-icon.png')
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                      child: Container(
-                          width: 70,
-                          height: 70,
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [Colors.black, Colors.grey],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft,
-                            ),
-                          ),
-                          child: Image.asset('assets/person-icon.png')
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                      child: Text("Hello,\nWelcome back", style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white, fontSize: 30,
-                        fontFamily: "Times New Roman",
+                      child: Text("Hello, \nWelcome back", style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.lightGreen[200], fontSize: 65,
+                        fontFamily: "Parisienne-Regular",
                       ),),
                     ),
                     Padding(
@@ -64,12 +64,13 @@ class _LoginState extends State<Login> {
                       child: TextField(
                         controller: _usernameController,
                         style: TextStyle(fontSize: 25, color: Colors.white),
-                        cursorColor: Colors.white,
+                        cursorColor: Colors.lightGreen[200],
                         decoration: InputDecoration(
                           labelText: "USERNAME",
                           errorText: _userInvalid ? _usernameError:null,
-                          labelStyle: TextStyle(color: Colors.white, fontSize: 15),
+                          labelStyle: TextStyle(color: Colors.lightGreen[200], fontSize: 15),
                         ),
+
                       ),
                     ),
                     Padding(
@@ -81,11 +82,11 @@ class _LoginState extends State<Login> {
                             controller: _passwordController,
                             obscureText: true,
                             style: TextStyle(fontSize: 25, color: Colors.white),
-                            cursorColor: Colors.white,
+                            cursorColor: Colors.lightGreen[200],
                             decoration: InputDecoration(
                               labelText: "PASSWORD",
                               errorText: _passInvalid?_passwordError:null,
-                              labelStyle: TextStyle(color: Colors.white, fontSize: 15),
+                              labelStyle: TextStyle(color: Colors.lightGreen[200], fontSize: 15),
                             ),
                           ),
                           // Text("SHOW", style: TextStyle(fontSize: 15, color: Colors.black87, fontWeight: FontWeight.bold),)
@@ -101,7 +102,7 @@ class _LoginState extends State<Login> {
                             width: double.infinity,
                             height: 40,
                             child: RaisedButton(
-                              color: Colors.white54,
+                              color: Colors.lightGreen[200],
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(8))),
                               onPressed: (){
@@ -111,7 +112,7 @@ class _LoginState extends State<Login> {
                                 onSignInClick();
                               },
                               child: Text("SIGN IN",
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.grey[900]),),
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white),),
                             ),
                           ),
                         ),
@@ -128,9 +129,9 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text("Forgot Password?",
-                            style: TextStyle(fontSize: 15, color: Colors.black87),),
+                            style: TextStyle(fontSize: 15, color: Colors.lightGreen[200]),),
                           Text("@CopyRightsByTeam04",
-                            style: TextStyle(fontSize: 15, color: Colors.black87),)
+                            style: TextStyle(fontSize: 15, color: Colors.lightGreen[200]),)
                         ],
                       ),
                     ),

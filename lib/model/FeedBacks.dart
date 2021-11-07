@@ -5,16 +5,22 @@ class FeedBacks {
   late int id;
   late String desciption;
   late int paySlipId;
-  late PaySlip paySlip;
+  late int employeeId;
+  late String createDate;
+  late String image;
+  //late PaySlip? paySlip;
 
-  FeedBacks({required this.id, required this.desciption, required this.paySlipId, required this.paySlip});
+  FeedBacks({required this.id,required this.desciption,required this.paySlipId,required this.employeeId, required this.createDate, required this.image});
 
   FeedBacks.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     desciption = json['desciption'];
     paySlipId = json['paySlipId'];
-    paySlip =
-    (json['paySlip'] != null ? new PaySlip.fromJson(json['paySlip']) : null)!;
+    employeeId = json['employeeId'];
+    createDate = json['createDate'];
+    image = json['image'];
+    //paySlip =
+    //(json['paySlip'] != null ? new PaySlip.fromJson(json['paySlip']) : null)!;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,9 +28,12 @@ class FeedBacks {
     data['id'] = this.id;
     data['desciption'] = this.desciption;
     data['paySlipId'] = this.paySlipId;
-    if (this.paySlip != null) {
-      data['paySlip'] = this.paySlip.toJson();
-    }
+    data['employeeId'] = this.employeeId;
+    data['createDate'] = this.createDate;
+    data['image'] = this.image;
+   // if (this.paySlip != null) {
+    //  data['paySlip'] = this.paySlip!.toJson();
+   // }
     return data;
   }
 }

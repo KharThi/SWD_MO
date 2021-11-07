@@ -1,25 +1,94 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:test/model/FeedBacks.dart';
+import 'package:test/resource/payroll_system_provider.dart';
+import 'package:test/view/home.dart';
+
+import 'feedback_history.dart';
 
 class FeebackPage extends StatefulWidget {
-  const FeebackPage({Key? key}) : super(key: key);
+  final int paySlipID;
+  final int empID;
+  const FeebackPage({Key? key, required this.paySlipID, required this.empID}) : super(key: key);
 
   @override
-  _FeebackPageState createState() => _FeebackPageState();
+  _FeebackPageState createState() => _FeebackPageState(this.paySlipID, this.empID);
 }
 
 class _FeebackPageState extends State<FeebackPage> {
+  int paySlipID;
+  int empID;
   List<bool> isTypeSelected = [false, false, false, false, false];
+  String isTitle='';
+  final description = TextEditingController();
+  var date = DateTime.now();
+  String currentDate = '';
+  List<File> _image = [];
+  final _picker = ImagePicker();
+  CollectionReference? imgRef;
+  firebase_storage.Reference? ref;
+  double val = 0;
+  int isSelected=0;
+  int num1 = 1;
+  int num2 = 2;
+  int num3 = 3;
+  int num4 = 4;
+  int num5 = 5;
 
+  _FeebackPageState(this.paySlipID, this.empID);
+
+  chooseImage() async {
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image.add(File(pickedFile!.path));
+    });
+  }
+  Future uploadImage() async {
+    int i = 1;
+    for(var img in _image) {
+      val = i / _image.length;
+      if (img != null) {
+        //Upload to Firebase
+        ref = firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('images/${Path.basename(img.path)}');
+
+        await ref!.putFile(img).whenComplete(() async {
+          await ref!.getDownloadURL().then((value) {
+            imgRef!.add({'url': value});
+            i++;
+          });
+        });
+
+      } else {
+        print('No Path Received');
+      }
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    imgRef = FirebaseFirestore.instance.collection('imageURLs');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow[50],
       appBar: AppBar(
         title: Text('FEEDBACK',
             style: TextStyle(fontSize: 20, fontFamily: "Times New Roman")),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.black, Colors.grey],
+              colors: [Colors.greenAccent, Colors.amberAccent],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             ),
@@ -38,7 +107,7 @@ class _FeebackPageState extends State<FeebackPage> {
                 Text(
                   "Please select the type of the feedback",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Color(0xFFA5A5A5),
                     fontWeight: FontWeight.bold
                   ),
                 ),
@@ -50,6 +119,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     setState(() {
                       isTypeSelected[0] = !isTypeSelected[0];
                     });
+                    isSelected = num1;
                   },
                 ),
                 GestureDetector(
@@ -59,6 +129,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     setState(() {
                       isTypeSelected[1] = !isTypeSelected[1];
                     });
+                    isSelected = num2;
                   },
                 ),
                 GestureDetector(
@@ -68,6 +139,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     setState(() {
                       isTypeSelected[2] = !isTypeSelected[2];
                     });
+                    isSelected = num3;
                   },
                 ),
                 GestureDetector(
@@ -77,6 +149,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     setState(() {
                       isTypeSelected[3] = !isTypeSelected[3];
                     });
+                    isSelected = num4;
                   },
                 ),
                 GestureDetector(
@@ -86,6 +159,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     setState(() {
                       isTypeSelected[4] = !isTypeSelected[4];
                     });
+                    isSelected = num5;
                   },
                 ),
                 SizedBox(
@@ -99,13 +173,46 @@ class _FeebackPageState extends State<FeebackPage> {
                     SizedBox(
                       width: 378,
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          isSelected == 1 ? isTitle = 'Overtime working trouble'
+                              : isSelected == 2 ? isTitle = 'Day off trouble'
+                              : isSelected == 3 ? isTitle = 'Working hours trouble'
+                              : isSelected == 4 ? isTitle = 'Other issues'
+                              : isSelected == 5 ? isTitle = 'Suggestions' : '';
+                          try{
+                            String? img;
+                            currentDate = '${date.day}-${date.month}-${date.year}';
+                            uploadImage().whenComplete((){
+                              Stream<QuerySnapshot<Map<String, dynamic>>> snapshot = FirebaseFirestore.instance.collection('imageURLs').snapshots();
+                              snapshot.forEach((element) {
+                                img = element.docs[0].get('url');
+                                // element.docs.forEach((e) {
+                                //   img.add(e.get('url'));
+                                // });
+                                print('ngày đây nè '+ currentDate);
+                                Future<String> result=PayrollProvider.createFeedback(new FeedBacks(id: 0,
+                                    desciption: 'isTitle++description.text',
+                                    paySlipId: 4,
+                                    employeeId: 2,
+                                    createDate: "7-11-2021",
+                                    image: "https://i.pinimg.com/736x/5e/79/b6/5e79b699cc020bad76dfdbb0297bae8f.jpg"));
+                                result.then((value) => {
+                                  print(value)
+                                  // Navigator.pop(context)
+                                });
+                              });
+                            });
+                          }catch(e){
+                            print(e);
+                          }
+                          Navigator.pop(context) ;
+                        },
                         child: Text(
                           "SUBMIT",
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
-                        color: Colors.grey,
+                        color: Colors.lime[200],
                         padding: EdgeInsets.all(16.0),
                       ),
                     ),
@@ -119,7 +226,9 @@ class _FeebackPageState extends State<FeebackPage> {
         children: <Widget>[
           new GestureDetector(
             onTap: () {
-
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => FeedbackHistory()
+              ));
             },
             child: Container(
               height: 45,
@@ -129,7 +238,7 @@ class _FeebackPageState extends State<FeebackPage> {
                   .width / 3,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.black26, Colors.black12],
+                  colors: [Colors.lime, Colors.amberAccent],
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                 ),
@@ -140,7 +249,9 @@ class _FeebackPageState extends State<FeebackPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => HomePage()
+              ));
             },
             child: Container(
               height: 45,
@@ -150,7 +261,7 @@ class _FeebackPageState extends State<FeebackPage> {
                   .width / 3,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.grey, Colors.black12],
+                  colors: [Colors.limeAccent, Colors.lime],
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                 ),
@@ -160,7 +271,7 @@ class _FeebackPageState extends State<FeebackPage> {
           ),
           new GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+
               },
               child: Container(
                 height: 45,
@@ -170,7 +281,7 @@ class _FeebackPageState extends State<FeebackPage> {
                     .width / 3,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.black, Colors.grey],
+                    colors: [Colors.green, Colors.limeAccent],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
@@ -186,64 +297,54 @@ class _FeebackPageState extends State<FeebackPage> {
   buildFeedbackForm() {
     return Container(
       height: 300,
-      child: Stack(
-        children: [
-          TextField(
-            maxLines: 50,
-            decoration: InputDecoration(
-              hintText: "Please briefly describe the issue",
-              hintStyle: TextStyle(
-                fontSize: 13.0,
-                color: Colors.black,
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color(0xFFE5E5E5),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextField(
+              maxLines: 10,
+              controller: description,
+              decoration: InputDecoration(
+                hintText: "Please briefly describe the issue",
+                hintStyle: TextStyle(
+                  fontSize: 13.0,
+                  color: Color(0xFFA6A6A6),
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xFFE5E5E5),
+                  ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    width: 1.0,
-                    color: Color(0xFFA6A6A6),
-                  ),
-                ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                height: 200,
+                width: 200,
+                padding: EdgeInsets.all(4),
+                child: GridView.builder(
+                    itemCount: _image.length + 1,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3),
+                    itemBuilder: (context, index) {
+                      return index == 0
+                          ? Center(
+                        child: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () => chooseImage()),
+                      )
+                          : Container(
+                        margin: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: FileImage(_image[index - 1]),
+                                fit: BoxFit.cover)),
+                      );
+                    }),
               ),
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE5E5E5),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.add,
-                        color: Color(0xFFA5A5A5),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    "Upload screenshot (optional)",
-                    style: TextStyle(
-                      color: Color(0xFFC5C5C5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -255,14 +356,15 @@ class _FeebackPageState extends State<FeebackPage> {
         children: [
           Icon(
             isSelected ? Icons.check_circle : Icons.circle,
-            color: isSelected ? Colors.black26 : Colors.grey,
+            color: isSelected ? Colors.greenAccent : Colors.amber[200],
           ),
           SizedBox(width: 10.0),
           Text(
             title,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: isSelected ? Colors.blue : Colors.grey),
+                color: isSelected ? Colors.greenAccent : Colors.amber[200]
+            ),
           ),
         ],
       ),

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test/resource/google_sign_in.dart';
 import 'package:test/resource/payroll_system_provider.dart';
+import 'package:test/view/feedback_history.dart';
+import 'package:test/view/login.dart';
 import 'package:test/view/payslip.dart';
 import 'package:test/view/payslip_detail.dart';
 import 'package:test/view/privacy_policy.dart';
@@ -26,21 +28,21 @@ class _HomePageState extends State<HomePage> {
   var appbarTitle;
 
   @override
-  Widget build(BuildContext mainContext) {
+  Widget build(BuildContext context) {
     var container;
     final user = FirebaseAuth.instance.currentUser;
 
-    String token;
-
-    user!.getIdToken().then((result) {
-      token = result.toString();
-      while (token.length > 0) {
-        int initLength = (token.length >= 500 ? 500 : token.length);
-        print(token.substring(0, initLength));
-        int endLength = token.length;
-        token = token.substring(initLength, endLength);
-      }
-    });
+    // String token;
+    //
+    // user!.getIdToken().then((result) {
+    //   token = result.toString();
+    //   while (token.length > 0) {
+    //     int initLength = (token.length >= 500 ? 500 : token.length);
+    //     print(token.substring(0, initLength));
+    //     int endLength = token.length;
+    //     token = token.substring(initLength, endLength);
+    //   }
+    // });
 
     if (currentPage == DrawerSections.payslip) {
       container = PaySlipPage();
@@ -52,66 +54,82 @@ class _HomePageState extends State<HomePage> {
       container = PrivacyPolicy();
       appbarTitle = 'PRIVACY POLICY';
     }
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (context)=> GoogleSignInProvider())
-        ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(appbarTitle,
-              style: TextStyle(fontSize: 20, fontFamily: "Times New Roman")),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.black, Colors.grey],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-              ),
+    return  Scaffold(
+      appBar: AppBar(
+        title: Text(appbarTitle,
+            style: TextStyle(fontSize: 20, fontFamily: "Times New Roman")),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.greenAccent, Colors.amberAccent],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
             ),
           ),
         ),
-        drawer: Drawer(
-          child: SingleChildScrollView(
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                MyHeaderDrawer(),
+                MyDrawerList(),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+      bottomNavigationBar: Row(
+        children: <Widget>[
+          new GestureDetector(
+            onTap: () {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => FeedbackHistory()
+              ));
+            },
             child: Container(
-              child: Column(
-                children: [
-                  MyHeaderDrawer(),
-                  MyDrawerList(),
-                ],
+              height: 45,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 3,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.lime, Colors.amberAccent],
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                ),
               ),
+              child: Icon(Icons.history_outlined),
+
             ),
           ),
-        ),
-
-        bottomNavigationBar: Row(
-          children: <Widget>[
-            new GestureDetector(
-              onTap: () {
-
-              },
-              child: Container(
-                height: 45,
-                width: MediaQuery
-                    .of(mainContext)
-                    .size
-                    .width / 3,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.black12],
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                  ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => HomePage()));
+            },
+            child: Container(
+              height: 45,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 3,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.limeAccent, Colors.lime],
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
                 ),
-                child: Icon(Icons.history_outlined),
-
               ),
+              child: Icon(Icons.home_outlined),
             ),
-            GestureDetector(
+          ),
+          new GestureDetector(
               onTap: () {
-                Navigator.push(context, new MaterialPageRoute(
-                  //cho nay nen back lai chu kh tao widget homepage moi
-                    builder: (mainContext) => HomePage()));
+
               },
               child: Container(
                 height: 45,
@@ -121,39 +139,18 @@ class _HomePageState extends State<HomePage> {
                     .width / 3,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.grey, Colors.black12],
+                    colors: [Colors.green, Colors.limeAccent],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
                 ),
-                child: Icon(Icons.home_outlined),
-              ),
-            ),
-            new GestureDetector(
-                onTap: () {
+                child: Icon(Icons.notifications_active_outlined),
 
-                },
-                child: Container(
-                  height: 45,
-                  width: MediaQuery
-                      .of(mainContext)
-                      .size
-                      .width / 3,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.black, Colors.grey],
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft,
-                    ),
-                  ),
-                  child: Icon(Icons.notifications_active_outlined),
-
-                )
-            )
-          ],
-        ),
-        body: container,
+              )
+          )
+        ],
       ),
+      body: container,
     );
   }
 
@@ -198,7 +195,7 @@ class _HomePageState extends State<HomePage> {
               final provider =
               Provider.of<GoogleSignInProvider>(context, listen: false);
               provider.logout();
-              _showAlertDialogLogout(context);
+              // _showAlertDialogLogout(context);
             }
           });
         },
@@ -229,39 +226,15 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  void _showAlertDialogLogout(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    showDialog(
-        context: context,
-        builder: (BuildContext context) =>
-            CupertinoAlertDialog(
-              title: Text('Confirm To Logout!'),
-              content: Text(
-                  'Do you want to logout, '+user!.displayName.toString()+'?'
-              ),
-              actions: [
-                CupertinoDialogAction(
-                  child: Text('No'),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                CupertinoDialogAction(
-                  child: Text('Yes'),
-                  textStyle: TextStyle(color: Colors.red),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                    provider.logout();
-                  },
-                ),
-              ],
-            ),
-    );
-  }
+  // Widget _showAlertDialogLogout(BuildContext context) {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   return ChangeNotifierProvider(
+  //       create: (context) => GoogleSignInProvider(),
+  //       child: Container(
+  //         child: ,
+  //       ),
+  //   );
+  // }
 }
   enum DrawerSections
   {
@@ -271,4 +244,3 @@ class _HomePageState extends State<HomePage> {
   privacy_policy,
   log_out,
 }
-

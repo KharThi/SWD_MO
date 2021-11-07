@@ -16,7 +16,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
       padding: EdgeInsets.only(top: 20.0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.black, Colors.grey],
+          colors: [Colors.greenAccent, Colors.amberAccent],
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
         ),
@@ -33,7 +33,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
                 image: NetworkImage(user!.photoURL.toString()),
               ),
               gradient: LinearGradient(
-                colors: [Colors.black, Colors.grey],
+                colors: [Colors.greenAccent, Colors.amberAccent],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft,
               ),

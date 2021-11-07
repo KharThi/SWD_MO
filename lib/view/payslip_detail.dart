@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test/model/PaySlipDetails.dart';
 import 'package:test/resource/payroll_system_provider.dart';
+import 'package:test/view/payslip.dart';
 
 import 'feedback.dart';
+import 'feedback_history.dart';
 import 'home.dart';
 
 class PaySlipDetail extends StatefulWidget {
@@ -17,6 +19,7 @@ class PaySlipDetail extends StatefulWidget {
 
 class _PaySlipDetailState extends State<PaySlipDetail> {
   int id;
+  int? empID;
 
   _PaySlipDetailState(this.id);
 
@@ -24,12 +27,13 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
   Widget build(BuildContext context) {
     return
       Scaffold(
+        backgroundColor: Colors.yellow[50],
         appBar: AppBar(
           elevation: 0,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black, Colors.grey],
+                colors: [Colors.greenAccent, Colors.amberAccent],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft,
               ),
@@ -40,7 +44,9 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
           children: <Widget>[
             new GestureDetector(
               onTap: () {
-
+                Navigator.push(context, new MaterialPageRoute(
+                    builder: (context) => FeedbackHistory()
+                ));
               },
               child: Container(
                 height: 45,
@@ -50,7 +56,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     .width / 3,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.black12],
+                    colors: [Colors.lime, Colors.amberAccent],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
@@ -61,7 +67,9 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, new MaterialPageRoute(
+                    builder: (context) => HomePage()
+                ));
               },
               child: Container(
                 height: 45,
@@ -71,7 +79,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     .width / 3,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.grey, Colors.black12],
+                    colors: [Colors.limeAccent, Colors.lime],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),
@@ -81,7 +89,8 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
             ),
             new GestureDetector(
                 onTap: () {
-                 Navigator.pop(context);
+
+
                 },
                 child: Container(
                   height: 45,
@@ -91,7 +100,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                       .width / 3,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.grey],
+                      colors: [Colors.green, Colors.limeAccent],
                       begin: Alignment.bottomRight,
                       end: Alignment.topLeft,
                     ),
@@ -108,6 +117,8 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
             if(snapshot.hasError){
               print('lỗi đây nè '+snapshot.error.toString());
             }if(snapshot.hasData){
+              // paySlipID=snapshot.data!.paySlipId;
+              empID=snapshot.data!.employeeId;
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -127,7 +138,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                               bottomRight: Radius.circular(36),
                             ),
                             gradient: LinearGradient(
-                              colors: [Colors.black, Colors.grey],
+                              colors: [Colors.greenAccent, Colors.amberAccent],
                               begin: Alignment.bottomRight,
                               end: Alignment.topLeft,
                             ),
@@ -158,7 +169,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                                 BoxShadow(
                                   offset: Offset(0, 10),
                                   blurRadius: 50,
-                                  color: Colors.black,
+                                  color: Colors.lime,
                                 ),
                               ],
                             ),
@@ -190,7 +201,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 70, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.lime[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Working Hours'),
@@ -204,7 +215,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.yellow[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Overtime Working Hours'),
@@ -218,7 +229,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.lime[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Doubletime Working Hours'),
@@ -232,7 +243,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.yellow[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Hours Off'),
@@ -246,7 +257,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.lime[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Gross Pay'),
@@ -260,7 +271,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.yellow[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Benefit'),
@@ -274,7 +285,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.lime[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Deduction'),
@@ -288,7 +299,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.yellow[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Bonus'),
@@ -302,7 +313,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.lime[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Tax'),
@@ -316,7 +327,7 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Card(
-                        color: Colors.white,
+                        color: Colors.yellow[100],
                         elevation: 2.0,
                         child: ListTile(
                           title: Text('Net Pay'),
@@ -332,17 +343,17 @@ class _PaySlipDetailState extends State<PaySlipDetail> {
               );
 
             }else{
-              return Center(child: CircularProgressIndicator(color: Colors.black26,));
+              return Center(child: CircularProgressIndicator(color: Colors.amberAccent,));
             }
           },
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
             Navigator.push(context, new MaterialPageRoute(
-                builder: (mainContext) => FeebackPage()));
+                builder: (mainContext) => FeebackPage(paySlipID: paySlipID, empID: empID!.toInt(),)));
           },
           child: Icon(Icons.feedback_outlined),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.lightGreenAccent,
         ),
       );
   }
