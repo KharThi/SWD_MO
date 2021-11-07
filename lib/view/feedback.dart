@@ -189,7 +189,8 @@ class _FeebackPageState extends State<FeebackPage> {
                                 // element.docs.forEach((e) {
                                 //   img.add(e.get('url'));
                                 // });
-                                print('ngày đây nè '+ currentDate);
+
+                                //help tui chỗ này :')
                                 Future<String> result=PayrollProvider.createFeedback(new FeedBacks(id: 0,
                                     desciption: 'isTitle++description.text',
                                     paySlipId: 4,
